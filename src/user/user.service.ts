@@ -3,6 +3,7 @@ import { User } from './schemas/user.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateUserDto } from './dto/create-user.dto';
+import { LoginUserDto } from 'src/auth/dto/login.dto';
 
 @Injectable()
 export class UserService {
@@ -19,5 +20,13 @@ export class UserService {
 
       throw new error();
     }
+  }
+
+  async getUser(loginUserDto: LoginUserDto) {
+    return await this.userModel.findOne({ email: loginUserDto.email });
+  }
+
+  async getUserById(id: string) {
+    return await this.userModel.findById(id);
   }
 }
